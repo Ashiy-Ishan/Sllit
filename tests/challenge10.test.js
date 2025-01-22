@@ -120,8 +120,9 @@ afterAll((done) => {
 });
 
 describe("Post authentication tasks", () => {
-  var authenticatedSession = null;
-  var authToken = null;
+  let authenticatedSession = null;
+  let authToken = null;
+
   beforeAll(async () => {
     const result = await testBase.authenticateTestSession(testSession);
     authenticatedSession = testSession;
@@ -132,7 +133,17 @@ describe("Post authentication tasks", () => {
     const res = await authenticatedSession
       .get("/api/movie/least-rented")
       .set("Authorization", `Bearer ${authToken}`);
+
     expect(res.status).toEqual(HttpStatus.OK);
-    expect(res.body.data).toEqual(response);
+    expect(res.body.data).toEqual(mockResponse);
+    expect(res.body.data).toHaveLength(4);
+
+    res.body.data.forEach((movie) => {
+      expect(movie).toHaveProperty("id");
+      expect(movie).toHaveProperty("title");
+      expect(movie).toHaveProperty("dailyRentalRate");
+      expect(movie.discountRate).toBe(0.15);
+      expect(movie.genres).toBeInstanceOf(Array);
+    });
   });
 });
