@@ -3,13 +3,30 @@ import { BASE_AUTH_URL } from "./URL.js";
 window.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
   const inputFields = document.querySelectorAll(".form-control");
+  const passwordField = document.getElementById("password");
+  const eyeIcon = document.getElementById("togglePasswordVisibility");
 
+  // Clear error message on input
   inputFields.forEach((field) => {
     field.addEventListener("input", () => {
       document.getElementById("error-message").style.display = "none";
     });
   });
 
+  // Toggle password visibility
+  if (eyeIcon) {
+    eyeIcon.addEventListener("click", () => {
+      if (passwordField.type === "password") {
+        passwordField.type = "text";
+        eyeIcon.style.color = "rgb(111, 0, 255)";
+      } else {
+        passwordField.type = "password";
+        eyeIcon.style.color = "rgb(204, 204, 204)";
+      }
+    });
+  }
+
+  // Handle login form submission
   if (loginForm) {
     loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -32,7 +49,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
           window.location.href = "../client/home.html";
         } else {
-          displayError(response.message);
+          displayError("Invalid email or password");
         }
       } catch (error) {
         displayError("An error occurred during login. Please try again.");
@@ -61,11 +78,11 @@ async function loginUser(email, password) {
     } else {
       return {
         error: true,
-        message: data.message || "Invalid login credentials.",
+        message: "Invalid email or password",
       };
     }
   } catch (error) {
-    return { error: true, message: error.message };
+    return { error: true, message: "Invalid email or password" };
   }
 }
 
