@@ -20,6 +20,12 @@ window.addEventListener("DOMContentLoaded", () => {
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
 
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      displayError(passwordError);
+      return;
+    }
+
     if (password !== confirmPassword) {
       displayError("Passwords do not match.");
       return;
@@ -39,6 +45,27 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+function validatePassword(password) {
+  if (password.length < 8) {
+    return "Password should be at least 8 characters long.";
+  }
+
+  if (password.length > 25) {
+    return "Password must not be more than 25 characters long.";
+  }
+
+  const hasUppercase = /[A-Z]/.test(password);
+  const hasLowercase = /[a-z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+  if (!(hasUppercase && hasLowercase && hasNumber && hasSpecialChar)) {
+    return "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
+  }
+
+  return null; // No errors
+}
 
 async function signupUser(firstName, lastName, email, password) {
   try {

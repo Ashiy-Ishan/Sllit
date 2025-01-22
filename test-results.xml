@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="3" failures="1" errors="0" time="8.147">
+    <testsuite name="tests/_sanity.test.js" timestamp="2025-01-22T10:52:33.936Z" hostname="DESKTOP-UNCPN7B" tests="3" failures="1" errors="0" skipped="0" time="4.964">
+        <testcase classname="tests/_sanity.test.js" name="Authentication tests &gt; Sanity Test - User login works" time="1.231">
+            <failure message="expected 500 to be 200 // Object.is equality" type="AssertionError">
+AssertionError: expected 500 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 500
+
+ ❯ tests/_sanity.test.js:27:24
+
+            </failure>
+        </testcase>
+        <testcase classname="tests/_sanity.test.js" name="Authentication tests &gt; Sanity Test - User registration works" time="1.197">
+        </testcase>
+        <testcase classname="tests/_sanity.test.js" name="Authentication tests &gt; Sanity Test - Database reset for each test" time="1.218">
+        </testcase>
+    </testsuite>
+</testsuites>
